@@ -41,9 +41,12 @@ if has("cscope")
     " add any GTAGS database in current directory
     if filereadable("GTAGS")
         cs add GTAGS
-    " else add the database pointed to by environment variable 
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
+        " else add the database pointed to by environment variable 
+    else
+        let CSCOPE_DB = findfile("GTAGS",".;")
+        if CSCOPE_DB != ''
+            execute 'cs add '. CSCOPE_DB
+        endif
     endif
 
     " show msg when any other cscope db added
