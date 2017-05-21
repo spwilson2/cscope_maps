@@ -12,32 +12,6 @@ if !has("cscope")
     finish
 endif
 
-""""""""""""" Standard cscope/vim boilerplate
-function! AutoAddGTags()
-    let cmd = "cd " . expand('%:h') . " && global -pq"
-    let l:CSCOPE_DB = system(cmd)[:-2]
-    silent echo 'Automatically loaded tags file: ' . l:CSCOPE_DB . "/GTAGS"
-    if l:CSCOPE_DB != ''
-        execute 'cs add '. l:CSCOPE_DB . "/GTAGS"
-    endif
-endfunction
-
-" use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
-set cscopetag
-set csprg=gtags-cscope
-set nocscopeverbose  
-
-" check cscope for definition of a symbol before checking ctags: set to 1
-" if you want the reverse search order.
-set csto=0
-
-" add any GTAGS database in current directory
-if filereadable("GTAGS")
-    cs add GTAGS
-else
-    call AutoAddGTags()
-endif
-
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>	
 nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>	
 nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>	
